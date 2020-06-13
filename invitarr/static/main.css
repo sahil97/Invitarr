@@ -1,0 +1,35 @@
+/* Universal */
+:root {
+    --main-bg-color: #000000;
+    --content-background: #17151C;
+    --secondary-content-background: #2A2731;
+    --primary-text-color: #FFFFFF;
+}
+
+body{
+    background-color: var(--main-bg-color);
+    color: var(--primary-text-color);
+}
+
+/* Header */
+h3{
+    font-weight: bold;
+}
+
+/* Form */
+.form-container{
+    padding: 1.5em;
+    padding-top: 2em;
+    border-radius: 0 0 5px 5px;
+    background-color: var(--content-background);
+}
+
+.form-stringfield{
+    background-color: var(--secondary-content-background);
+    color: var(--primary-text-color);
+}
+
+.form-stringfield:focus{
+    background-color: var(--secondary-content-background);
+    color: var(--primary-text-color);
+}
