@@ -2,7 +2,7 @@ from flask import render_template, flash
 
 from invitarr import app
 from invitarr.forms import BotForm
-from invitarr import config
+from invitarr import configHandler
 
 @app.route('/', methods=['GET'])
 def home():
@@ -12,6 +12,9 @@ def home():
 def bot():
     env_form = BotForm()
     if env_form.validate_on_submit():
-        flash('Settings updated.')
-        print(env_form)
+        try:
+            configHandler.change_config_form(env_form)
+            flash('Settings updated.')
+        except:
+            flash('Some error in updating settings')
     return render_template('bot.html', form = env_form)
