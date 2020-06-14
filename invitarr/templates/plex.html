@@ -10,10 +10,10 @@
                 <a class="nav-link" href="{{ url_for('home') }}">General</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="{{ url_for('bot') }}">Bot</a>
+                <a class="nav-link" href="{{ url_for('bot') }}">Bot</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Plex</a>
+                <a class="nav-link active" href="#">Plex</a>
             </li>
           </ul>
     </nav>
@@ -24,41 +24,40 @@
             <div class="form-group mb-3">
             <div class="row">
                 <div class="col-md-3">
-                {{ form.discord_bot_token.label(class="form-control-label")}}
+                {{ form.plex_user.label(class="form-control-label")}}
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-6">
-                {% if form.discord_bot_token.errors %}
-                    {{ form.discord_bot_token(class="form-control form-stringfield")}}
+                {% if form.plex_user.errors %}
+                    {{ form.plex_user(class="form-control form-stringfield")}}
                     <small id="emailHelp" class="form-text text-muted">Some text describing this field</small>
                         <div class="invalid-feedback">
-                        {% for error in form.discord_bot_token.errors %}
+                        {% for error in form.plex_user.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                         </div>
                 {% else %}
-                    {{ form.discord_bot_token(class="form-control form-stringfield")}}        
+                    {{ form.plex_user(class="form-control form-stringfield")}}        
                 {% endif %}  
-                <small id="emailHelp" class="form-text text-muted">Some text describing this field</small>
                 </div>
             </div>
             </div>
             <div class="form-group my-3">
                 <div class="row">
                     <div class="col-md-3">
-                    {{ form.role_id.label(class="form-control-label")}}
+                    {{ form.plex_pass.label(class="form-control-label")}}
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-6">
-                    {% if form.role_id.errors %}
-                        {{ form.role_id(class="form-control form-stringfield")}}
+                    {% if form.plex_pass.errors %}
+                        {{ form.plex_pass(class="form-control form-stringfield")}}
                         <div class="invalid-feedback">
-                            {% for error in form.role_id.errors %}
+                            {% for error in form.plex_pass.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.role_id(class="form-control form-stringfield")}}        
+                        {{ form.plex_pass(class="form-control form-stringfield")}}        
                     {% endif %}  
                     </div>
                 </div>
@@ -66,19 +65,19 @@
             <div class="form-group my-3">
                 <div class="row">
                     <div class="col-md-3">
-                    {{ form.channel_id.label(class="form-control-label")}}
+                    {{ form.plex_server_name.label(class="form-control-label")}}
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-6">
-                    {% if form.channel_id.errors %}
-                        {{ form.channel_id(class="form-control form-stringfield")}}
+                    {% if form.plex_server_name.errors %}
+                        {{ form.plex_server_name(class="form-control form-stringfield")}}
                         <div class="invalid-feedback">
-                            {% for error in form.channel_id.errors %}
+                            {% for error in form.plex_server_name.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.channel_id(class="form-control form-stringfield")}}        
+                        {{ form.plex_server_name(class="form-control form-stringfield")}}        
                     {% endif %}  
                     </div>
                 </div>
@@ -86,44 +85,23 @@
             <div class="form-group my-3">
                 <div class="row">
                     <div class="col-md-3">
-                    {{ form.owner_id.label(class="form-control-label")}}
+                    {{ form.plex_libs.label(class="form-control-label")}}
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-6">
-                    {% if form.owner_id.errors %}
-                        {{ form.owner_id(class="form-control form-stringfield")}}
+                    {% if form.plex_libs.errors %}
+                        {{ form.plex_libs(class="form-control form-stringfield")}}
                         <div class="invalid-feedback">
-                            {% for error in form.owner_id.errors %}
+                            {% for error in form.plex_libs.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.owner_id(class="form-control form-stringfield")}}        
-                    {% endif %}  
+                        {{ form.plex_libs(class="form-control form-stringfield")}}        
+                    {% endif %} 
+                    <small id="emailHelp" class="form-text text-muted">Enter comma seperated values</small>
                     </div>
                 </div>
-            </div>
-            <div class="my-3">
-            <div class="row">
-                <div class="col-md-3">
-                    <p>Auto Remove User</p>
-                </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-1 custom-control custom-control-inline custom-switch custom-checkbox">
-                {% if form.auto_remove_user.errors %}
-                    {{ form.auto_remove_user(class="custom-control-input form-stringfield", id="removeSwitch")}}
-                    {{ form.auto_remove_user.label(class="custom-control-label", for="removeSwitch")}}
-                    <div class="invalid-feedback">
-                        {% for error in form.auto_remove_user.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.auto_remove_user(class="custom-control-input form-stringfield", id="removeSwitch")}}
-                    {{ form.auto_remove_user.label(class="custom-control-label", for="removeSwitch")}}
-                {% endif %}
-                </div>
-            </div>
             </div>
             <div class="form-group my-5 submit-btn">
             {{ form.submit(class="btn btn-primary submit-btn") }}
@@ -164,27 +142,10 @@
             $("#myModal").modal();
         };
     
-        // Adding Validation
-        number_validaitons = ['role_id', 'channel_id', 'owner_id']
-        number_validaitons.forEach(element => {
-            $('#' + element).keyup(function () { 
-                this.value = this.value.replace(/[^0-9\.]/g,'');
-            });            
-        });
-
-        let checkbox_state = $('input[name=auto_remove_user]').is(':checked');
-        
-        if(checkbox_state == false){
-            $('.custom-control-label').text('Off');
-        }
-        
-        $('#removeSwitch').on('change', (e)=> {
-            checkbox_state = $('input[name=auto_remove_user]').is(':checked');
-            if(checkbox_state == false){
-                $('.custom-control-label').text('Off');
-            } else {
-                $('.custom-control-label').text('On');
-            }
+        $(".plex-libs").select2({
+            theme: "classic",
+            tags: true,
+            tokenSeparators: [',', ' ']
         });
     });
 </script>

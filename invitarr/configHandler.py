@@ -3,6 +3,9 @@ config = configparser.ConfigParser()
 
 CONFIG_PATH = 'invitarr/bot/config.ini'
 BOT_SECTION = 'bot_envs'
+CONFIG_KEYS = ['username', 'password', 'discord_bot_token', 'plex_user', 'plex_pass',
+                'role_id', 'plex_server_name', 'plex_libs', 'owner_id', 'channel_id',
+                'auto_remove_user']
 
 def get_config():
     """
@@ -24,26 +27,29 @@ def change_config(key, value):
     try:
         config = configparser.ConfigParser()
         config.read(CONFIG_PATH)
-
+    except Exception as e:
+        print(e)
+        print("Cannot Read config.")
+    
+    try:
         config.set(BOT_SECTION, key, str(value))
+    except Exception as e:
+        config.add_section(BOT_SECTION)
+        config.set(BOT_SECTION, key, str(value))
+
+    try:
         with open(CONFIG_PATH, 'w') as configfile:
             config.write(configfile)    
     except Exception as e:
         print(e)
-        print("Cannot change config.")
+        print("Cannot write to config.")
         
 def change_config_form(form_output):
     """
     Function to change config on the basis of form_output from web
     """
-    config_keys = ['discord_bot_token', 'plex_user', 'plex_pass', 'role_id', 'plex_server_name'
-                    'plex_libs', 'owner_id', 'channel_id', 'auto_remove_user']
-
-    for key in config_keys:
+    for key in CONFIG_KEYS:
         try:
-            if key == 'plex_libs':
-                pass
-            else:
-                change_config(key, form_output[key].data)
+            change_config(key, form_output[key].data)
         except:
             pass
