@@ -16,11 +16,15 @@ h3{
     font-weight: bold;
 }
 
+a.nav-link{
+    color: var(--primary-text-color);
+}
+
 /* Form */
 .form-container{
     padding: 1.5em;
     padding-top: 2em;
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 10px 10px;
     background-color: var(--content-background);
 }
 
@@ -32,4 +36,21 @@ h3{
 .form-stringfield:focus{
     background-color: var(--secondary-content-background);
     color: var(--primary-text-color);
+}
+
+.custom-checkbox{
+    padding-left: 3em;
+}
+
+/* Modal */
+.modal-content{
+    background-color: var(--secondary-content-background);
+}
+
+.modal-body{
+    text-align: center;
+}
+
+.modal-header{
+    border-bottom: none;
 }
