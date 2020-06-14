@@ -1,34 +1,32 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, IntegerField, RadioField
-from wtforms.validators import Required
+from wtforms import StringField, SubmitField, BooleanField, IntegerField
+from wtforms.validators import DataRequired
 
-class EnvForm(FlaskForm):
+class BotForm(FlaskForm):
     
-
     discord_bot_token = StringField('Discord Bot Token',
-                                validators=[Required()])
+                                validators=[DataRequired()])
 
     role_id =  IntegerField('Role Id',
-                                validators=[Required()])
+                                validators=[DataRequired()])
 
-    plex_user = StringField('Plex User',
-                                validators=[Required()])
-    plex_pass = StringField('Plex Pass',
-                                validators=[Required()])
-    plex_server_name = StringField('Plex Server Name',
-                                validators=[Required()])
-    plex_libs = StringField('Plex Libs',
-                                validators=[Required()])
     channel_id = IntegerField('Channel Id',
-                                validators=[Required()])
+                                validators=[DataRequired()])
     owner_id = IntegerField('Owner Id',
-                                validators=[Required()])
-    # Type
-    aru_choices = [('Off', 'Off'),('On','On')]
-    auto_remove_user = RadioField('Match Type',
-                            choices = aru_choices,
-                            validators=[Required()])
+                                validators=[DataRequired()])
+    # Auto Remove User
+    auto_remove_user = BooleanField('On')
 
     submit = SubmitField('Save Changes')
 
+class PlexForm(FlaskForm):
     
+    plex_user = StringField('Plex User',
+                                validators=[DataRequired()])
+    plex_pass = StringField('Plex Pass',
+                                validators=[DataRequired()])
+    plex_server_name = StringField('Plex Server Name',
+                                validators=[DataRequired()])
+    plex_libs = StringField('Plex Libs',
+                                validators=[DataRequired()])
+    submit = SubmitField('Save Changes')
