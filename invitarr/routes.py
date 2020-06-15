@@ -23,6 +23,12 @@ def login():
             flash('Login Unsuccessful. Please check email and password')
     return render_template('login.html', title='Login', form=form)
 
+@app.route('/logout')
+def logout():
+    flash('Logged out.')
+    logout_user()
+    return redirect(url_for('login'))
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     form = GeneralForm()
@@ -36,6 +42,7 @@ def home():
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             user.password = hashed_password
             db.session.commit()
+            logout_user()
             flash('Details updated.')
             return redirect(url_for('login'))
     return render_template('index.html', form=form)

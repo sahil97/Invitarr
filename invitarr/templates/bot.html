@@ -3,7 +3,7 @@
     <div class="header mt-5 d-flex">
         <img src="{{ url_for('static', filename='img/logo.svg') }}" class="img align-self-center" height="45">
         <h3 class="align-self-center">Invitarr Configuration</h3>
-        <button class="ml-auto btn btn-danger align-self-center">Restart bot</button>
+        <!-- <button class="ml-auto btn btn-danger align-self-center">Restart bot</button> -->
     </div>
     <nav>
         <ul class="nav nav-tabs">
@@ -15,6 +15,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('plex') }}">Plex</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
             </li>
           </ul>
     </nav>
