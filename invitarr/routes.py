@@ -62,12 +62,15 @@ def home():
 def bot():
     form = BotForm()
     if request.method == 'GET':
-        config = configHandler.get_config()
-        form.discord_bot_token.data = config.get(BOT_SECTION, 'discord_bot_token')
-        form.role_id.data = config.get(BOT_SECTION, 'role_id')
-        form.channel_id.data = config.get(BOT_SECTION, 'channel_id')
-        form.owner_id.data = config.get(BOT_SECTION, 'owner_id')
-        form.auto_remove_user.data = config.get(BOT_SECTION, 'auto_remove_user')
+        try:
+            config = configHandler.get_config()
+            form.discord_bot_token.data = config.get(BOT_SECTION, 'discord_bot_token')
+            form.role_id.data = config.get(BOT_SECTION, 'role_id')
+            form.channel_id.data = config.get(BOT_SECTION, 'channel_id')
+            form.owner_id.data = config.get(BOT_SECTION, 'owner_id')
+            form.auto_remove_user.data = config.get(BOT_SECTION, 'auto_remove_user')
+        except:
+            pass
     elif request.method == 'POST':
         if form.validate_on_submit():
             try:
@@ -83,11 +86,14 @@ def bot():
 def plex():
     form = PlexForm()
     if request.method == 'GET':
-        config = configHandler.get_config()
-        form.plex_user.data = config.get(BOT_SECTION, 'plex_user')
-        form.plex_pass.data = config.get(BOT_SECTION, 'plex_pass')
-        form.plex_server_name.data = config.get(BOT_SECTION, 'plex_server_name')
-        form.plex_libs.data = config.get(BOT_SECTION, 'plex_libs')
+        try:
+            config = configHandler.get_config()
+            form.plex_user.data = config.get(BOT_SECTION, 'plex_user')
+            form.plex_pass.data = config.get(BOT_SECTION, 'plex_pass')
+            form.plex_server_name.data = config.get(BOT_SECTION, 'plex_server_name')
+            form.plex_libs.data = config.get(BOT_SECTION, 'plex_libs')
+        except:
+            pass
     elif request.method == 'POST':
         if form.validate_on_submit():
             try:
