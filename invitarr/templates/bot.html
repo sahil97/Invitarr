@@ -1,8 +1,9 @@
 {%extends 'layout.html'%}
 {% block content %}
-    <div class="header mt-5">
-        <img src="{{ url_for('static', filename='img/logo.svg') }}" class="img" height="45">
-        <h3>Invitarr Configuration</h3>
+    <div class="header mt-5 d-flex">
+        <img src="{{ url_for('static', filename='img/logo.svg') }}" class="img align-self-center" height="45">
+        <h3 class="align-self-center">Invitarr Configuration</h3>
+        <button class="ml-auto btn btn-danger align-self-center">Restart bot</button>
     </div>
     <nav>
         <ul class="nav nav-tabs">

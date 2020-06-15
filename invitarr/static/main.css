@@ -19,13 +19,17 @@ h3{
     padding-top: 0.5em;
 }
 
-header img{
-    margin-bottom: 0.5em;
+.header img{
     vertical-align: middle;
 }
 
 a.nav-link{
     color: var(--primary-text-color);
+}
+
+.header button{
+    max-height: 50px;
+    /* margin: 1em 0.5em; */
 }
 
 /* Form */
@@ -61,4 +65,16 @@ a.nav-link{
 
 .modal-header{
     border-bottom: none;
+}
+
+/* Login Page */
+.login{
+    margin: auto;
+    margin-top: 5em;
+    text-align: center;
+}
+
+.login h2{
+    margin-top: 1em;
+    font-weight: bold;
 }
