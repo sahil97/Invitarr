@@ -1,5 +1,6 @@
 from flask import render_template, flash, request, redirect, url_for
 from flask_login import login_user, current_user, logout_user, login_required
+import subprocess
 
 from invitarr import app, db, bcrypt
 from invitarr.models import User
@@ -7,6 +8,16 @@ from invitarr.forms import LoginForm, GeneralForm, BotForm, PlexForm
 from invitarr import configHandler
 
 db.create_all()
+BOT_SECTION = 'bot_envs'
+proc = None
+
+def manage_bot(option):
+    global proc
+    if option == 'start':
+        proc = subprocess.Popen(["python", "invitarr/bot/Invitarr.py"]) 
+    elif option == 'kill':
+        if proc:
+            proc.terminate()
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -50,21 +61,44 @@ def home():
 @app.route('/bot', methods=['GET', 'POST'])
 def bot():
     form = BotForm()
-    if form.validate_on_submit():
-        try:
-            configHandler.change_config_form(form)
-            flash('Settings updated.')
-        except:
-            flash('Some error in updating settings')
+    if request.method == 'GET':
+        config = configHandler.get_config()
+        form.discord_bot_token.data = config.get(BOT_SECTION, 'discord_bot_token')
+        form.role_id.data = config.get(BOT_SECTION, 'role_id')
+        form.channel_id.data = config.get(BOT_SECTION, 'channel_id')
+        form.owner_id.data = config.get(BOT_SECTION, 'owner_id')
+        form.auto_remove_user.data = config.get(BOT_SECTION, 'auto_remove_user')
+    elif request.method == 'POST':
+        if form.validate_on_submit():
+            try:
+                configHandler.change_config_form(form)
+                flash('Settings updated.')
+                manage_bot('kill')
+                manage_bot('start')
+            except:
+                flash('Some error in updating settings')
     return render_template('bot.html', form = form)
 
 @app.route('/plex', methods=['GET', 'POST'])
 def plex():
     form = PlexForm()
-    if form.validate_on_submit():
-        try:
-            configHandler.change_config_form(form)
-            flash('Settings updated.')
-        except:
-            flash('Some error in updating settings')
+    if request.method == 'GET':
+        config = configHandler.get_config()
+        form.plex_user.data = config.get(BOT_SECTION, 'plex_user')
+        form.plex_pass.data = config.get(BOT_SECTION, 'plex_pass')
+        form.plex_server_name.data = config.get(BOT_SECTION, 'plex_server_name')
+        form.plex_libs.data = config.get(BOT_SECTION, 'plex_libs')
+    elif request.method == 'POST':
+        if form.validate_on_submit():
+            try:
+                configHandler.change_config_form(form)
+                flash('Settings updated.')
+            except:
+                flash('Some error in updating settings')
+            try:
+                manage_bot('kill')
+                manage_bot('start')
+            except Exception as e:
+                raise Exception(e)
+
     return render_template('plex.html', form = form)

@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_URL = 'plex.db'
+DB_URL = 'invitarr/bot/app.db'
 
 def create_connection(db_file):
     """ create a database connection to a SQLite database """
@@ -26,11 +26,11 @@ def checkTableExists(dbcon, tablename):
 conn = create_connection(DB_URL)
 
 # Checking if table exists
-if checkTableExists(conn, 'USERS'):
+if checkTableExists(conn, 'clients'):
 	print('Table exists.')
 else:
     conn.execute('''
-    CREATE TABLE "USERS" (
+    CREATE TABLE "clients" (
     "id"	INTEGER NOT NULL UNIQUE,
     "discord_username"	TEXT NOT NULL UNIQUE,
     "email"	TEXT NOT NULL,
@@ -40,7 +40,7 @@ else:
 
 def save_user(username, email):
     if username and email:
-        conn.execute("INSERT INTO USERS (discord_username, email) VALUES ('"+ username +"', '" + email +  "')");
+        conn.execute("INSERT INTO clients (discord_username, email) VALUES ('"+ username +"', '" + email +  "')");
         conn.commit()
         print("User added to db.")
     else:
@@ -49,7 +49,7 @@ def save_user(username, email):
 def get_useremail(username):
     if username:
         try:
-            cursor = conn.execute('SELECT discord_username, email from USERS where discord_username="{}";'.format(username))
+            cursor = conn.execute('SELECT discord_username, email from clients where discord_username="{}";'.format(username))
             for row in cursor:
                 email = row[1]
             if email:
@@ -64,7 +64,7 @@ def get_useremail(username):
 def delete_user(username):
     if username:
         try:
-            conn.execute('DELETE from USERS where discord_username="{}";'.format(username))
+            conn.execute('DELETE from clients where discord_username="{}";'.format(username))
             conn.commit()
             return True
         except:
@@ -72,8 +72,7 @@ def delete_user(username):
     else:
         return "username cannot be empty"
 
-def read_useremail():
-  data = cursor.fetchall()
-  for row in data :
-    print row[1]
-  
+# def read_useremail():
+#   data = cursor.fetchall()
+#   for row in data :
+#     print row[1]
