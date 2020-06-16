@@ -52,6 +52,7 @@ def home():
     elif request.method == 'POST':
         if form.validate_on_submit():
             user = User.query.all()[0]
+            user.username = form.username.data
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             user.password = hashed_password
             db.session.commit()
