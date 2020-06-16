@@ -35,12 +35,14 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 @app.route('/logout')
+@login_required
 def logout():
     flash('Logged out.')
     logout_user()
     return redirect(url_for('login'))
 
 @app.route('/', methods=['GET', 'POST'])
+@login_required
 def home():
     form = GeneralForm()
     if request.method == 'GET':
@@ -59,6 +61,7 @@ def home():
     return render_template('index.html', form=form)
 
 @app.route('/bot', methods=['GET', 'POST'])
+@login_required
 def bot():
     form = BotForm()
     if request.method == 'GET':
@@ -83,6 +86,7 @@ def bot():
     return render_template('bot.html', form = form)
 
 @app.route('/plex', methods=['GET', 'POST'])
+@login_required
 def plex():
     form = PlexForm()
     if request.method == 'GET':
