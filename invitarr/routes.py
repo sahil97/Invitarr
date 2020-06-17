@@ -28,6 +28,11 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=True)
+            try:
+                manage_bot('kill')
+                manage_bot('start')
+            except:
+                print("Cannot start bot")
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
@@ -80,10 +85,13 @@ def bot():
             try:
                 configHandler.change_config_form(form)
                 flash('Settings updated.')
+            except:
+                flash('Some error in updating settings')
+            try:
                 manage_bot('kill')
                 manage_bot('start')
             except:
-                flash('Some error in updating settings')
+                print("Cannot start bot")
     return render_template('bot.html', form = form)
 
 @app.route('/plex', methods=['GET', 'POST'])
@@ -110,6 +118,6 @@ def plex():
                 manage_bot('kill')
                 manage_bot('start')
             except Exception as e:
-                raise Exception(e)
+                print("Cannot start bot")
 
     return render_template('plex.html', form = form)
