@@ -19,6 +19,11 @@ def manage_bot(option):
         if proc:
             proc.terminate()
 
+try:
+    manage_bot('start')
+except:
+    print("Some error in starting bot. Please check the config vars")
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -32,7 +37,7 @@ def login():
                 manage_bot('kill')
                 manage_bot('start')
             except:
-                print("Cannot start bot")
+                print("Some error in starting bot. Please check the config vars")
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
@@ -91,7 +96,7 @@ def bot():
                 manage_bot('kill')
                 manage_bot('start')
             except:
-                print("Cannot start bot")
+                print("Some error in starting bot. Please check the config vars")
     return render_template('bot.html', form = form)
 
 @app.route('/plex', methods=['GET', 'POST'])
@@ -118,6 +123,6 @@ def plex():
                 manage_bot('kill')
                 manage_bot('start')
             except Exception as e:
-                print("Cannot start bot")
+                print("Some error in starting bot. Please check the config vars")
 
     return render_template('plex.html', form = form)
